@@ -69,6 +69,8 @@ class IssuesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def issue_params
-      params.require(:issue).permit(:codename, :speaker_id, :text)
+      rv = params.require(:issue).permit(:codename, :text)
+      rv[:speaker_id] = current_speaker.id
+      rv
     end
 end

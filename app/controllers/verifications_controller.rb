@@ -69,6 +69,8 @@ class VerificationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def verification_params
-      params.require(:verification).permit(:speaker_id)
+      params.require(:verification).permit()
+      rv[:speaker_id] = current_speaker.id
+      rv
     end
 end

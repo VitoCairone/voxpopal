@@ -69,6 +69,8 @@ class ChoicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def choice_params
-      params.require(:choice).permit(:issue_id, :speaker_id, :text, :voice_tally_1, :voice_tally_2, :voice_tally_3, :current_rank)
+      params.require(:choice).permit(:issue_id, :text, :voice_tally_1, :voice_tally_2, :voice_tally_3, :current_rank)
+      rv[:speaker_id] = current_speaker.id
+      rv
     end
 end

@@ -69,6 +69,8 @@ class VoicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def voice_params
-      params.require(:voice).permit(:speaker_id, :choice_id, :level)
+      rv = params.require(:voice).permit(:choice_id, :level)
+      rv[:speaker_id] = current_speaker.id
+      rv
     end
 end

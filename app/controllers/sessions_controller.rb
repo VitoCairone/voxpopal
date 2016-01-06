@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-	include ApplicationHelper
+	# include ApplicationHelper
 
 	def create
     @speaker = Speaker.find_by_email(params[:email])
