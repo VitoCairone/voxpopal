@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  codename: MyString
+  name: MyString
+  email: MyString
+  password_hash: MyString
+  starsign: MyString
+  birth_month: MyString
+  birth_year: 1
+  verification_id: 
+  level: 1
+  session_token: MyString
+  recall_token: MyString
+  logged_in: false
+  last_action: 2016-01-05 23:04:42
+
+two:
+  codename: MyString
+  name: MyString
+  email: MyString
+  password_hash: MyString
+  starsign: MyString
+  birth_month: MyString
+  birth_year: 1
+  verification_id: 
+  level: 1
+  session_token: MyString
+  recall_token: MyString
+  logged_in: false
+  last_action: 2016-01-05 23:04:42

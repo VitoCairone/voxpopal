@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Issue:</strong>
+  <%= @choice.issue %>
+</p>
+
+<p>
+  <strong>Speaker:</strong>
+  <%= @choice.speaker %>
+</p>
+
+<p>
+  <strong>Text:</strong>
+  <%= @choice.text %>
+</p>
+
+<p>
+  <strong>Voice tally 1:</strong>
+  <%= @choice.voice_tally_1 %>
+</p>
+
+<p>
+  <strong>Voice tally 2:</strong>
+  <%= @choice.voice_tally_2 %>
+</p>
+
+<p>
+  <strong>Voice tally 3:</strong>
+  <%= @choice.voice_tally_3 %>
+</p>
+
+<p>
+  <strong>Current rank:</strong>
+  <%= @choice.current_rank %>
+</p>
+
+<%= link_to 'Edit', edit_choice_path(@choice) %> |
+<%= link_to 'Back', choices_path %>

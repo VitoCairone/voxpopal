@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Speakers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Codename</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Password hash</th>
+      <th>Starsign</th>
+      <th>Birth month</th>
+      <th>Birth year</th>
+      <th>Verification</th>
+      <th>Level</th>
+      <th>Session token</th>
+      <th>Recall token</th>
+      <th>Logged in</th>
+      <th>Last action</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @speakers.each do |speaker| %>
+      <tr>
+        <td><%= speaker.codename %></td>
+        <td><%= speaker.name %></td>
+        <td><%= speaker.email %></td>
+        <td><%= speaker.password_hash %></td>
+        <td><%= speaker.starsign %></td>
+        <td><%= speaker.birth_month %></td>
+        <td><%= speaker.birth_year %></td>
+        <td><%= speaker.verification %></td>
+        <td><%= speaker.level %></td>
+        <td><%= speaker.session_token %></td>
+        <td><%= speaker.recall_token %></td>
+        <td><%= speaker.logged_in %></td>
+        <td><%= speaker.last_action %></td>
+        <td><%= link_to 'Show', speaker %></td>
+        <td><%= link_to 'Edit', edit_speaker_path(speaker) %></td>
+        <td><%= link_to 'Destroy', speaker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Speaker', new_speaker_path %>

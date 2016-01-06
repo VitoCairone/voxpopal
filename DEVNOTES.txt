@@ -1,0 +1,21 @@
+# CORE
+rails generate scaffold speaker codename:string name:string email:string password_hash:string(64) starsign:string birth_month:string birth_year:integer verification:references level:integer session_token:string(64) recall_token:string(64) logged_in:boolean last_action:timestamp
+rails generate scaffold issue codename:string speaker:references text:text
+rails generate scaffold choice issue:references speaker:references text:text voice_tally_1:integer voice_tally_2:integer voice_tally_3:integer current_rank:integer
+rails generate scaffold voice speaker:references choice:references level:integer
+rails generate scaffold comment speaker:references parent:references{polymorphic}
+rails generate scaffold verification speaker:references
+
+# COMMON
+rails generate scaffold pocket speaker:references boost:integer
+rails generate scaffold checkbook speaker:references
+
+# AVF
+rails generate scaffold proposal
+rails generate scaffold amendment
+
+# GPE
+rails generate scaffold starsign
+rails generate scaffold vision
+
+# -----

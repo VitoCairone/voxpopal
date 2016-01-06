@@ -1,0 +1,69 @@
+<%= form_for(@speaker) do |f| %>
+  <% if @speaker.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@speaker.errors.count, "error") %> prohibited this speaker from being saved:</h2>
+
+      <ul>
+      <% @speaker.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :codename %><br>
+    <%= f.text_field :codename %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br>
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :password_hash %><br>
+    <%= f.text_field :password_hash %>
+  </div>
+  <div class="field">
+    <%= f.label :starsign %><br>
+    <%= f.text_field :starsign %>
+  </div>
+  <div class="field">
+    <%= f.label :birth_month %><br>
+    <%= f.text_field :birth_month %>
+  </div>
+  <div class="field">
+    <%= f.label :birth_year %><br>
+    <%= f.number_field :birth_year %>
+  </div>
+  <div class="field">
+    <%= f.label :verification_id %><br>
+    <%= f.text_field :verification_id %>
+  </div>
+  <div class="field">
+    <%= f.label :level %><br>
+    <%= f.number_field :level %>
+  </div>
+  <div class="field">
+    <%= f.label :session_token %><br>
+    <%= f.text_field :session_token %>
+  </div>
+  <div class="field">
+    <%= f.label :recall_token %><br>
+    <%= f.text_field :recall_token %>
+  </div>
+  <div class="field">
+    <%= f.label :logged_in %><br>
+    <%= f.check_box :logged_in %>
+  </div>
+  <div class="field">
+    <%= f.label :last_action %><br>
+    <%= f.datetime_select :last_action %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

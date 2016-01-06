@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  speaker_id: 
+  parent_id: 
+  parent_type: Parent
+
+two:
+  speaker_id: 
+  parent_id: 
+  parent_type: Parent

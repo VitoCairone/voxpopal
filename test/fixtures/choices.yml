@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  issue_id: 
+  speaker_id: 
+  text: MyText
+  voice_tally_1: 1
+  voice_tally_2: 1
+  voice_tally_3: 1
+  current_rank: 1
+
+two:
+  issue_id: 
+  speaker_id: 
+  text: MyText
+  voice_tally_1: 1
+  voice_tally_2: 1
+  voice_tally_3: 1
+  current_rank: 1
