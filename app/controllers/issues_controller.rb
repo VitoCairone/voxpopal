@@ -15,6 +15,7 @@ class IssuesController < ApplicationController
   # GET /issues/new
   def new
     @issue = Issue.new
+    2.times { @issue.choices.build }
   end
 
   # GET /issues/1/edit
@@ -24,7 +25,13 @@ class IssuesController < ApplicationController
   # POST /issues
   # POST /issues.json
   def create
-    @issue = Issue.new(issue_params)
+    iparams = issue_params
+    choices_attributes = iparams['choices_attributes']
+    choices_attributes.each do |k, v|
+      choices_attributes[k]['speaker_id'] = current_speaker.id
+    end
+
+    @issue = Issue.new(iparams)
 
     respond_to do |format|
       if @issue.save
@@ -64,12 +71,12 @@ class IssuesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_issue
-      @issue = Issue.find(params[:id])
+      @issue = Issue.includes(:choices).find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def issue_params
-      rv = params.require(:issue).permit(:codename, :text)
+      rv = params.require(:issue).permit(:codename, :text, choices_attributes: [:text])
       rv[:speaker_id] = current_speaker.id
       rv
     end

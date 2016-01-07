@@ -15,5 +15,15 @@
   <%= @issue.text %>
 </p>
 
+<p>
+	<div style="margin-left:20px;">
+	<% @issue.choices.each do |choice| %>
+		<% @choice = choice %>
+		<%= render choice %>
+	<% end %>
+	</div>
+</p>
+
+
 <%= link_to 'Edit', edit_issue_path(@issue) %> |
 <%= link_to 'Back', issues_path %>

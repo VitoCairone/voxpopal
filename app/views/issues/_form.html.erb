@@ -16,16 +16,8 @@
     <%= f.text_area :text %>
   </div>
 
-  <% extant_choices = @issue.choices %>
-  <% n_extant = extant_choices.size || 0 %>
-  <% n_choices = [2, n_extant].max %>
-  <% for i in 1..n_choices %>
-    <div class="field">
-      <label for="choices_<%= i %>_text">Choice</label><br>
-      <textarea name="choices[<%= i %>][text]" id="choices_<%= i %>_text">
-        <%= extant_choices[i-1].text if i <= n_extant %>
-      </textarea>
-    </div>
+  <%= f.fields_for :choices do |builder| %>
+    <%= render "choice_fields", f: builder %>
   <% end %>
 
   <p><i>Choices are always presented in a <b>random</b> order</i></p>
