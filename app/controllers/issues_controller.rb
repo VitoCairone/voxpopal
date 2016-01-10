@@ -15,7 +15,7 @@ class IssuesController < ApplicationController
   # GET /issues/new
   def new
     @issue = Issue.new
-    2.times { @issue.choices.build }
+    7.times { @issue.choices.build }
   end
 
   # GET /issues/1/edit
@@ -26,11 +26,11 @@ class IssuesController < ApplicationController
   # POST /issues.json
   def create
     iparams = issue_params
+    iparams['codename'] = get_available_codename
     choices_attributes = iparams['choices_attributes']
     choices_attributes.each do |k, v|
       choices_attributes[k]['speaker_id'] = current_speaker.id
     end
-
     @issue = Issue.new(iparams)
 
     respond_to do |format|
@@ -69,15 +69,28 @@ class IssuesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_issue
-      @issue = Issue.includes(:choices).find(params[:id])
-    end
+  
+  # Use callbacks to share common setup or constraints between actions.
+  def set_issue
+    @issue = Issue.includes(:choices).find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def issue_params
-      rv = params.require(:issue).permit(:codename, :text, choices_attributes: [:text])
-      rv[:speaker_id] = current_speaker.id
-      rv
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def issue_params
+    rv = params.require(:issue).permit(:codename, :text, choices_attributes: [:id, :text])
+    rv[:speaker_id] = current_speaker.id
+    rv
+  end
+
+  def get_available_codename
+    # this current implementation isn't tightly time-constrained or collision-proof
+    # prerer in the future pulling and reserving from a pre-created list
+    not_original = true
+    while not_original do
+      codename = (rand(26).ord + 'A'.ord).chr + rand(100).to_s
+      break if Issue.count > 26 * 100
+      not_original = !!(Issue.find_by_codename(codename))
     end
+    codename
+  end
 end
