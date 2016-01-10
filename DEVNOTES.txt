@@ -24,3 +24,35 @@ rails generate scaffold starsign
 rails generate scaffold vision
 
 # -----
+
+# PLAN OF ATTACK!
+# creating issues and choices
+# editting issues and choices with proper permissions
+# creating voices
+# editting OWN VOICE - no admin privs
+# tests for CRUD with security on issues, choices, and voices
+# display of ranks - and possibly some voice tally info
+# display of unvoiced issues in fixed order
+# speaker signup
+# tests for ranking, tallying, unvoiced issue order, and speaker signup
+# new and normal speaker workflow
+# initial styling
+# speaker verification
+# discussion threads
+# full static documentation
+# creating proposals and amendments
+# editting proposals and amendments with proper permissions
+# creating votes
+# editting OWN VOTE - no admin privs
+# tests for CRUD with security on proposals, amendments, votes
+# display of proposals in fixed rank order with votes
+# tests for all functions excluding micropayments / GPE
+# host app { auto-trigger @ 9 pm Sunday 1/10/16 }
+# implement patronage portal and patron rewards
+# implement micropayments
+# manually test micropayments
+# boost purchasing in speaker portal
+# creating visions
+# editting visions with proper permissions
+# disperse awards on confirmation
+# tests for CRUD with security on visions
