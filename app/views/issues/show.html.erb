@@ -17,10 +17,7 @@
 
 <p>
 	<div style="margin-left:20px;">
-	<% @issue.choices.each do |choice| %>
-		<% @choice = choice %>
-		<%= render choice %>
-	<% end %>
+		<%= render 'voice_form' %>
 	</div>
 </p>
 

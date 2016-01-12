@@ -10,6 +10,8 @@ class IssuesController < ApplicationController
   # GET /issues/1
   # GET /issues/1.json
   def show
+    @voice = Voice.find_by speaker_id: current_speaker.id
+    @voice ||= Voice.new
   end
 
   # GET /issues/new
@@ -26,11 +28,13 @@ class IssuesController < ApplicationController
   # POST /issues.json
   def create
     iparams = issue_params
+    iparams['speaker_id'] = current_speaker.id
     iparams['codename'] = get_available_codename
     choices_attributes = iparams['choices_attributes']
     choices_attributes.each do |k, v|
       choices_attributes[k]['speaker_id'] = current_speaker.id
     end
+    choices_attributes.keep_if { |k, v| !v['text'].blank? }
     @issue = Issue.new(iparams)
 
     respond_to do |format|
@@ -48,7 +52,9 @@ class IssuesController < ApplicationController
   # PATCH/PUT /issues/1.json
   def update
     respond_to do |format|
-      if @issue.update(issue_params)
+      iparams = issue_params
+      iparams['speaker_id'] = current_speaker.id
+      if @issue.update(iparams)
         format.html { redirect_to @issue, notice: 'Issue was successfully updated.' }
         format.json { render :show, status: :ok, location: @issue }
       else
@@ -77,18 +83,14 @@ class IssuesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def issue_params
-    rv = params.require(:issue).permit(:codename, :text, choices_attributes: [:id, :text])
-    rv[:speaker_id] = current_speaker.id
-    rv
+    params.require(:issue).permit(:codename, :text, choices_attributes: [:id, :text, :_destroy])
   end
 
   def get_available_codename
-    # this current implementation isn't tightly time-constrained or collision-proof
-    # prerer in the future pulling and reserving from a pre-created list
     not_original = true
     while not_original do
-      codename = (rand(26).ord + 'A'.ord).chr + rand(100).to_s
-      break if Issue.count > 26 * 100
+      codename = (rand(26) + 'A'.ord).chr + rand(100).to_s
+      break if Issue.count > 26 * 100 * 2/3
       not_original = !!(Issue.find_by_codename(codename))
     end
     codename

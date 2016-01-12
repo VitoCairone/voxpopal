@@ -1,0 +1,16 @@
+<!--  this interface for single choice should be overwritten
+      by JavaScript with a proper free choice interface
+-->
+
+<%= form_for(@voice) do |f| %>
+  <% choices = @issue.choices.shuffle %>
+  <% choices.each do |choice| %>
+    <div class="field">
+      <%= radio_button_tag('voice[choice_id]', choice.id) %>
+      <%= label_tag('voice_choice_id_' + choice.id.to_s, choice.text) %> 
+    </div>
+  <% end %>
+
+  <%= f.submit %>
+
+<% end %>
