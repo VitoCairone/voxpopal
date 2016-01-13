@@ -10,7 +10,9 @@ class IssuesController < ApplicationController
   # GET /issues/1
   # GET /issues/1.json
   def show
-    @voice = Voice.find_by speaker_id: current_speaker.id
+    @voice = Voice.find_by issue_id: @issue.id, speaker_id: current_speaker.id
+    @voice_given = !!@voice
+    @voices = Voice.where(issue_id: @issue.id) if @voice_given
     @voice ||= Voice.new
   end
 

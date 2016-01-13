@@ -24,14 +24,18 @@ class VoicesController < ApplicationController
   # POST /voices
   # POST /voices.json
   def create
-    @voice = Voice.new(voice_params)
+    vp = voice_params
+    choice = Choice.find(vp['choice_id'])
+    vp['issue_id'] = choice.issue.id
+    vp['speaker_id'] = current_speaker.id
+    @voice = Voice.new(vp)
 
     respond_to do |format|
       if @voice.save
-        format.html { redirect_to @voice, notice: 'Voice was successfully created.' }
+        format.html { redirect_to @voice.issue, notice: 'Voice was successfully created.' }
         format.json { render :show, status: :created, location: @voice }
       else
-        format.html { render :new }
+        format.html { redirect_to @voice.issue }
         format.json { render json: @voice.errors, status: :unprocessable_entity }
       end
     end
@@ -69,8 +73,6 @@ class VoicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def voice_params
-      rv = params.require(:voice).permit(:choice_id, :level)
-      rv[:speaker_id] = current_speaker.id
-      rv
+      params.require(:voice).permit(:choice_id, :level)
     end
 end

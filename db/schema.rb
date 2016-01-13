@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160106070518) do
+ActiveRecord::Schema.define(version: 20160113000701) do
 
   create_table "choices", force: :cascade do |t|
     t.integer  "issue_id"
@@ -83,9 +83,11 @@ ActiveRecord::Schema.define(version: 20160106070518) do
     t.integer  "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "issue_id"
   end
 
   add_index "voices", ["choice_id"], name: "index_voices_on_choice_id"
+  add_index "voices", ["issue_id"], name: "index_voices_on_issue_id"
   add_index "voices", ["speaker_id"], name: "index_voices_on_speaker_id"
 
 end

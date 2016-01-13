@@ -5,7 +5,7 @@ rails generate scaffold issue codename:string speaker:references text:text
 
 rails generate scaffold choice issue:references speaker:references text:text voice_tally_1:integer voice_tally_2:integer voice_tally_3:integer current_rank:integer
 
-rails generate scaffold voice speaker:references choice:references level:integer
+rails generate scaffold voice issue:references speaker:references choice:references level:integer
 
 rails generate scaffold comment speaker:references parent:references{polymorphic}
 

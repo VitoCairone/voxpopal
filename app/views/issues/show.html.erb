@@ -17,7 +17,11 @@
 
 <p>
 	<div style="margin-left:20px;">
-		<%= render 'voice_form' %>
+		<% if @voice_given %>
+			<%= render 'result_view' %>
+		<% else %>
+			<%= render 'voice_form' %>
+		<% end %>
 	</div>
 </p>
 
