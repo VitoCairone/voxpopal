@@ -8,16 +8,21 @@
 </head>
 <body>
 
-<% if current_speaker.nil? %>
-	Please <%= link_to 'Login', new_session_path %>
-<% else %>
-	You are logged in as <%= current_speaker.codename %> | <%= link_to 'Logout', new_session_path %>
-<% end %>
+<div style="text-align: right;">
+	<% if current_speaker.nil? %>
+		Please <%= link_to 'Login', new_session_path %>
+	<% else %>
+		You are logged in as <%= current_speaker.codename %> | <%= link_to 'Logout', new_session_path %>
+	<% end %>
+</div>
 
-
-</p>
-
-<%= yield %>
+<div style="background: #00f; color: #f00;">
+	<div style="text-align: center;">
+		<div style="width: 500px; margin: 0 auto; background: #000; color: #fff;">
+			<%= yield %>
+		</div>
+	</div>
+</div>
 
 </body>
 </html>
