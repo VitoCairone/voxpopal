@@ -1,3 +1,12 @@
-Hello
-<%= render template: 'voices/index' %>
-World
+<% choices ||= @issue.choices.shuffle %>
+
+<% total_count = @issue.voices.count %>
+<% choices.each do |choice| %>
+	<div>
+		Choice: <%= choice.text %>
+		<!-- this query for each choice is bad practice -->
+		<!-- prefer to send and use results from one proper GROUP BY query -->
+		<% single_count = Voice.where(choice_id: choice.id).count %>
+		Rate: <%= (100 * single_count / total_count).to_s %>
+	</div>
+<% end %>
