@@ -14,10 +14,13 @@
 	You are logged in as <%= current_speaker.codename %> | <%= link_to 'Logout', new_session_path %>
 <% end %>
 
-
-</p>
-
-<%= yield %>
+<div>
+	<div style="text-align: center;">
+		<div style="width: 500px; margin: 0 auto;">
+			<%= yield %>
+		</div>
+	</div>
+</div>
 
 </body>
 </html>
