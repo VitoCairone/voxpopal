@@ -1,4 +1,22 @@
 Rails.application.routes.draw do
+  get 'home/welcome'
+
+  get 'home/help'
+
+  get 'home/about'
+
+  get 'home/portal'
+
+  get 'static_pages/welcome'
+
+  get 'static_pages/home'
+
+  get 'static_pages/help'
+
+  get 'static_pages/about'
+
+  get 'static_pages/portal'
+
   resources :verifications
   resources :comments
   resources :voices
