@@ -1,2 +1,8 @@
-<h1>Home#portal</h1>
-<p>Find me in app/views/home/portal.html.erb</p>
+<h1>Portal</h1>
+
+<ul style="list-style-position:inside;">
+	<li><%= link_to 'Issues', :issues %></li>
+	<li><%= link_to 'Donations', :issues %></li> <!-- should be :donations -->
+	<li><%= link_to 'Proposals', :issues %></li><!-- should be :proposals -->
+	<li><%= link_to 'Visions', :issues %></li><!-- should be :visions -->
+</ul>

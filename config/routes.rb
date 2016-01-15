@@ -1,21 +1,20 @@
 Rails.application.routes.draw do
+  root 'home#welcome'
+
   get 'home/welcome'
-
-  get 'home/help'
-
-  get 'home/about'
+  get 'welcome', to: 'home#welcome'
 
   get 'home/portal'
+  get 'portal', to: 'home#portal'
 
-  get 'static_pages/welcome'
+  get 'home/about'
+  get 'about', to: 'home#about'
 
-  get 'static_pages/home'
+  get 'home/help'
+  get 'help', to: 'home#help'
 
-  get 'static_pages/help'
-
-  get 'static_pages/about'
-
-  get 'static_pages/portal'
+  get 'home/donation-spending-policy'
+  get 'donation-spending-policy', to: 'home#donation_spending_policy' 
 
   resources :verifications
   resources :comments

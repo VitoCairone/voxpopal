@@ -10,4 +10,7 @@ class HomeController < ApplicationController
 
   def portal
   end
+
+  def donation_spending_policy
+  end
 end

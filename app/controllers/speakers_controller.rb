@@ -89,7 +89,18 @@ class SpeakersController < ApplicationController
       'Righteous ',
       'Wise ',
       'Proud ',
-      'Brave '
+      'Brave ',
+      'Honest ',
+      'Awesome ',
+      'Triumphant ',
+      'Furious ',
+      'Leaping ',
+      'Fighting ',
+      'Champion ',
+      'Smiling ',
+      'Rising ',
+      'Flying ',
+      'Grinning '
     ]
 
     list_2 = [
@@ -99,6 +110,10 @@ class SpeakersController < ApplicationController
       'Green ',
       'Blue ',
       'Violet ',
+      'White',
+      'Black',
+      'Brown',
+      'Pink',
       'Snow ',
       'Fire ',
       'Earth ',
@@ -107,7 +122,9 @@ class SpeakersController < ApplicationController
       'Electric ',
       'Space ',
       'Thunder ',
-      'Sonic '
+      'Sonic ',
+      'Little ',
+      'Big '
     ]
 
     list_3 = [
@@ -127,7 +144,9 @@ class SpeakersController < ApplicationController
       'Gator',
       'Dolphin',
       'Bumblebee',
-      'Grasshopper'
+      'Grasshopper',
+      'Deer',
+      'Tortoise'
     ]
 
     not_original = true
