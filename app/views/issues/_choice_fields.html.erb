@@ -1,17 +1,19 @@
-<p>
-	<div class="fieldgroup" 
-		<% if false %>
-			style="display:hidden;"
-		<% end %>
-	>
-	  <div class="field">
+<div class="fieldgroup" >
+	
+	<div class="textarea-pen">
+
+	  <div class="field choice-textarea">
+	  <!--
 	  <%= f.label :text, "Choice" %><br />
-	  <%= f.text_area :text, rows: 3 %><br />
+	  -->
+	  <%= f.text_area :text, rows: 1 %><br />
 	  </div>
 
-	  <div class="field" style="display:hidden;">
+	  <div class="field choice-killbox">
 	  <%= f.check_box :_destroy %>
-	  <%= f.label :_destroy, "Remove Choice" %>
+	  <%= f.label :_destroy, "X" %>
 	  </div>
+
   </div>
-</p>
+
+</div>
