@@ -3,13 +3,13 @@ body {
   color: #333;
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
-  line-height: 18px;
+  /* line-height: 18px; */
 }
 
 p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
-  line-height: 18px;
+  /* line-height: 18px; */
 }
 
 pre {
@@ -70,4 +70,10 @@ a {
     font-size: 12px;
     list-style: square;
   }
+}
+
+/* reset */
+
+h1 {
+  margin:0px 0px 0px 0px;
 }

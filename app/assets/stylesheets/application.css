@@ -17,6 +17,9 @@
 .center-column {
 	width: 900px;
 	margin: 0 auto;
-	background-color: #36f;
 	overflow: auto;
+}
+
+.content-body {
+	background-color: #36f;
 }
