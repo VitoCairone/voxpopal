@@ -4,12 +4,24 @@
 
 <%= form_for(@voice) do |f| %>
   <% choices = @issue.choices.shuffle %>
+  <% total_count = @voice_stats.values.inject { |a, b| a + b } %>
+  <table>
   <% choices.each do |choice| %>
+  	<% if @voice_given %>
+	  	<% single_count = @voice_stats[choice.id] || 0 %>
+			<% single_rate = (100 * single_count / total_count).to_s %>
+		<% end %>
+		<tr>
     <div class="field">
-      <%= radio_button_tag('voice[choice_id]', choice.id) %>
-      <%= label_tag('voice_choice_id_' + choice.id.to_s, choice.text) %> 
+      <td><%= radio_button_tag('voice[choice_id]', choice.id) %></td>
+      <td><%= label_tag('voice_choice_id_' + choice.id.to_s, choice.text) %></td>
+      <% if @voice_given %>
+      	<td><%= single_rate %></td>
+      <% end %>
     </div>
+    </tr>
   <% end %>
+  </table>
 
   <%= f.submit %>
 

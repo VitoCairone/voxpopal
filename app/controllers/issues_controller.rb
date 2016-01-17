@@ -14,6 +14,7 @@ class IssuesController < ApplicationController
     @voice_given = !!@voice
     @voices = Voice.where(issue_id: @issue.id) if @voice_given
     @voice ||= Voice.new
+    @voice_stats = Voice.find_counts_by_choice(@issue)
   end
 
   # GET /issues/new

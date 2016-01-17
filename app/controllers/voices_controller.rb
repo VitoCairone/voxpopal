@@ -46,7 +46,7 @@ class VoicesController < ApplicationController
   def update
     respond_to do |format|
       if @voice.update(voice_params)
-        format.html { redirect_to @voice, notice: 'Voice was successfully updated.' }
+        format.html { redirect_to @voice.issue, notice: 'Voice was successfully updated.' }
         format.json { render :show, status: :ok, location: @voice }
       else
         format.html { render :edit }

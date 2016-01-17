@@ -1,25 +1,15 @@
-<p id="notice"><%= notice %></p>
+<!--<p id="notice"><%= notice %></p>-->
 
 <p>
-  <strong>Codename:</strong>
-  <%= @issue.codename %>
+  <strong>Issue <%= @issue.codename %></strong>
 </p>
 
 <p>
-  <strong>Speaker:</strong>
-  <%= @issue.speaker %>
-</p>
-
-<p>
-  <strong>Text:</strong>
   <%= @issue.text %>
 </p>
 
 <p>
 	<div style="margin-left:20px;">
-		<% if @voice_given %>
-			<%= render 'result_view' %>
-		<% end %>
 		<%= render 'voice_form' %>
 	</div>
 </p>
