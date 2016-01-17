@@ -3,26 +3,47 @@
 -->
 
 <%= form_for(@voice) do |f| %>
+
   <% choices = @issue.choices.shuffle %>
   <% total_count = @voice_stats.values.inject { |a, b| a + b } %>
+  <% if choices.size > 7 %>
+  	<% top_seven = @voice_stats.sort_by { |_, v| -v }.first(7).map(&:first) %>
+  <% else %>
+  	<% top_seven = [] %>
+  <% end %>
+
   <table>
   <% choices.each do |choice| %>
+  	
   	<% if @voice_given %>
 	  	<% single_count = @voice_stats[choice.id] || 0 %>
 			<% single_rate = (100 * single_count / total_count).to_s %>
+			<% render_strong = top_seven.include? choice.id %>
 		<% end %>
 		<tr>
     <div class="field">
-      <td><%= radio_button_tag('voice[choice_id]', choice.id) %></td>
-      <td><%= label_tag('voice_choice_id_' + choice.id.to_s, choice.text) %></td>
+      <td>
+      	<%= radio_button_tag('voice[choice_id]', choice.id) %></td>
+      <td>
+      	<% if render_strong %><strong><% end %>
+      	<%= label_tag('voice_choice_id_' + choice.id.to_s, choice.text) %>
+      	<% if render_strong %></strong><% end %>
+      </td>
       <% if @voice_given %>
       	<td><%= single_rate %></td>
       <% end %>
     </div>
     </tr>
   <% end %>
+  <tr>
+	  <td><%= f.submit '✓' %></td>
+	  <td>
+		  <small><i>options are shown in random order</i></small>
+		  <% if choices.size > 7 %>
+		  	<br><small><i>the leading seven options are bolded</i></small>
+		  <% end %>
+	  </td>
+  </tr>
   </table>
-
-  <%= f.submit %>
 
 <% end %>

@@ -24,11 +24,7 @@ class VoicesController < ApplicationController
   # POST /voices
   # POST /voices.json
   def create
-    vp = voice_params
-    choice = Choice.find(vp['choice_id'])
-    vp['issue_id'] = choice.issue.id
-    vp['speaker_id'] = current_speaker.id
-    @voice = Voice.new(vp)
+    @voice = Voice.new(cleaned_voice_params)
 
     respond_to do |format|
       if @voice.save
@@ -74,5 +70,12 @@ class VoicesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def voice_params
       params.require(:voice).permit(:choice_id, :level)
+    end
+
+    def cleaned_voice_params
+      vp = voice_params
+      vp['issue_id'] = Choice.find(vp['choice_id']).issue_id
+      vp['speaker_id'] = current_speaker.id
+      vp
     end
 end
