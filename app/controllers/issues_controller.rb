@@ -4,6 +4,10 @@ class IssuesController < ApplicationController
   # GET /issues
   # GET /issues.json
   def index
+    # prefer this target SQL:
+    # SELECT * FROM issues i
+    # JOIN voices v ON v.issue_id = i.id
+    # WHERE v.speaker_id = {current_speaker.id}
     @issues = Issue.all
   end
 

@@ -38,10 +38,15 @@
   <tr>
 	  <td><%= f.submit '✓' %></td>
 	  <td>
-		  <small><i>options are shown in random order</i></small>
-		  <% if choices.size > 7 %>
-		  	<br><small><i>the leading seven options are bolded</i></small>
+		  <small><i>
+		  options are shown in random order
+		  <% if @voice_given %>
+		  	| <%= total_count %> voices heard
 		  <% end %>
+		  <% if choices.size > 7 %>
+		  	<br>the leading seven options are bolded
+		  <% end %>
+		  </i></small>
 	  </td>
   </tr>
   </table>
