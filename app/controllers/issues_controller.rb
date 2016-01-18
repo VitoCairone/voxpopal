@@ -4,11 +4,12 @@ class IssuesController < ApplicationController
   # GET /issues
   # GET /issues.json
   def index
-    # prefer this target SQL:
-    # SELECT * FROM issues i
-    # JOIN voices v ON v.issue_id = i.id
-    # WHERE v.speaker_id = {current_speaker.id}
     @issues = Issue.unseen_by_speaker(current_speaker)
+  end
+
+  def seen
+    @issues = Issue.seen_by_speaker(current_speaker)
+    render :seen
   end
 
   # GET /issues/1

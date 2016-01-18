@@ -20,7 +20,9 @@ Rails.application.routes.draw do
   resources :comments
   resources :voices
   resources :choices
-  resources :issues
+  resources :issues do
+    get 'seen', on: :collection
+  end
   resources :speakers
   resources :sessions, only: [:create, :new, :destroy]
   # The priority is based upon order of creation: first created -> highest priority.
