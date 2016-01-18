@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160113000701) do
+ActiveRecord::Schema.define(version: 20160118212416) do
 
   create_table "choices", force: :cascade do |t|
     t.integer  "issue_id"
@@ -49,24 +49,45 @@ ActiveRecord::Schema.define(version: 20160113000701) do
 
   add_index "issues", ["speaker_id"], name: "index_issues_on_speaker_id"
 
+  create_table "speaker_histories", force: :cascade do |t|
+    t.integer  "speaker_id"
+    t.integer  "issue_spare_1_id"
+    t.integer  "issue_spare_2_id"
+    t.integer  "issue_next_id"
+    t.integer  "issue_prev_id"
+    t.integer  "issue_prev_position"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "issue_spare_3_id"
+  end
+
+  add_index "speaker_histories", ["issue_next_id"], name: "index_speaker_histories_on_issue_next_id"
+  add_index "speaker_histories", ["issue_prev_id"], name: "index_speaker_histories_on_issue_prev_id"
+  add_index "speaker_histories", ["issue_spare_1_id"], name: "index_speaker_histories_on_issue_spare_1_id"
+  add_index "speaker_histories", ["issue_spare_2_id"], name: "index_speaker_histories_on_issue_spare_2_id"
+  add_index "speaker_histories", ["issue_spare_3_id"], name: "index_speaker_histories_on_issue_spare_3_id"
+  add_index "speaker_histories", ["speaker_id"], name: "index_speaker_histories_on_speaker_id"
+
   create_table "speakers", force: :cascade do |t|
     t.string   "codename"
     t.string   "name"
     t.string   "email"
-    t.string   "password_hash",   limit: 64
     t.string   "starsign"
     t.string   "birth_month"
     t.integer  "birth_year"
     t.integer  "verification_id"
     t.integer  "level"
-    t.string   "session_token",   limit: 64
-    t.string   "recall_token",    limit: 64
+    t.string   "session_token",      limit: 64
+    t.string   "recall_token",       limit: 64
     t.boolean  "logged_in"
     t.datetime "last_action"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.integer  "speaker_history_id"
+    t.string   "password_digest"
   end
 
+  add_index "speakers", ["speaker_history_id"], name: "index_speakers_on_speaker_history_id"
   add_index "speakers", ["verification_id"], name: "index_speakers_on_verification_id"
 
   create_table "verifications", force: :cascade do |t|

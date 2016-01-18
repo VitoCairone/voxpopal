@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  speaker_id: 
+  issue_spare_1_id: 
+  issue_spare_2_id: 
+  issue_next_id: 
+  issue_prev_id: 
+  issue_prev_position: 1
+
+two:
+  speaker_id: 
+  issue_spare_1_id: 
+  issue_spare_2_id: 
+  issue_next_id: 
+  issue_prev_id: 
+  issue_prev_position: 1

@@ -1,5 +1,5 @@
 # CORE
-rails generate scaffold speaker codename:string name:string email:string password_hash:string{64} starsign:string birth_month:string birth_year:integer verification:references level:integer session_token:string{64} recall_token:string{64} logged_in:boolean last_action:timestamp
+rails generate scaffold speaker codename:string name:string email:string password_digest:string starsign:string birth_month:string birth_year:integer verification:references level:integer session_token:string{64} recall_token:string{64} logged_in:boolean last_action:timestamp
 
 rails generate scaffold issue codename:string speaker:references text:text
 

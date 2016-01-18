@@ -27,6 +27,7 @@ class SpeakersController < ApplicationController
     sparams = speaker_params
     sparams['codename'] = Speaker.get_available_codename
     @speaker = Speaker.new(sparams)
+    @speaker.speaker_history = SpeakerHistory.create
 
     respond_to do |format|
       if @speaker.save

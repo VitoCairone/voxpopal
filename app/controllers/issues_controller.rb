@@ -5,11 +5,26 @@ class IssuesController < ApplicationController
   # GET /issues.json
   def index
     @issues = Issue.unseen_by_speaker(current_speaker)
+
+    if @issues.length > 0
+      current_speaker.speaker_history.issue_spare_1_id = @issues[0].id
+      if @issues.length > 1
+        current_speaker.speaker_history.issue_spare_2_id = @issues[1].id
+        if @issues.length > 2
+          current_speaker.speaker_history.issue_spare_3_id = @issues[2].id
+        end
+      end
+    end
+    if @issues.length > 3
+      current_speaker.speaker_history.next_issue_id = @issues[3].id
+    end
+    current_speaker.speaker_history.save
+
+    @issues
   end
 
   def seen
     @issues = Issue.seen_by_speaker(current_speaker)
-    render :seen
   end
 
   # GET /issues/1

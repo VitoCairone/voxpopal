@@ -1,5 +1,7 @@
 class Speaker < ActiveRecord::Base
+  has_secure_password
   belongs_to :verification
+  belongs_to :speaker_history
   has_many :choices
   has_many :voices
   has_many :issues
@@ -12,11 +14,14 @@ class Speaker < ActiveRecord::Base
   	# and return the id of that record.
   	# The subsequent logic which creates a singular session_token
   	# should then update that returned record.
-  	speaker = Speaker.find_or_create_by(session_token: 'LOGGED_OUT_GUEST')
-      
+  	speaker = Speaker.find_or_create_by(session_token: 'LOGGED_OUT_GUEST') do |s|
+      s.codename = Speaker.get_available_codename
+      s.speaker_history = SpeakerHistory.create
+      s.password = SecureRandom.urlsafe_base64(20)
+    end
   end
 
-  def get_available_codename
+  def self.get_available_codename
     # this current implementation isn't tightly time-constrained or collision-proof
     # prerer in the future pulling and reserving from a pre-created list
     list_1 = [

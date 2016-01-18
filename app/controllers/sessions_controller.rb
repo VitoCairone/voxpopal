@@ -3,7 +3,8 @@ class SessionsController < ApplicationController
 
 	def create
     @speaker = Speaker.find_by_email(params[:email])
-    if @speaker && @speaker.password_hash == password_hash(params[:password])
+    if @speaker and @speaker.authenticate(params[:password])
+      logout
       login(@speaker)
       redirect_to issues_url
     else
@@ -12,7 +13,6 @@ class SessionsController < ApplicationController
   end
 
   def new
-  	logout
   end
 
 end
