@@ -13,14 +13,12 @@ module ApplicationHelper
   	(!!current_speaker) and (object.speaker_id == current_speaker.id)
   end
 
-  # delete / replace
   def is_guest?
-    @is_guest ||= (!!current_speaker) and (current_speaker.id != 1)
+    current_speaker.guest
   end
 
-  # delete / replace
   def is_admin?
-  	@is_admin ||= (!!current_speaker) and (current_speaker.id == 1)
+  	current_speaker.admin
   end
 
   # move / reimplement ?

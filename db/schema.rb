@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160118212416) do
+ActiveRecord::Schema.define(version: 20160118215609) do
 
   create_table "choices", force: :cascade do |t|
     t.integer  "issue_id"
@@ -81,10 +81,12 @@ ActiveRecord::Schema.define(version: 20160118212416) do
     t.string   "recall_token",       limit: 64
     t.boolean  "logged_in"
     t.datetime "last_action"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.integer  "speaker_history_id"
     t.string   "password_digest"
+    t.boolean  "guest",                         default: true
+    t.boolean  "admin",                         default: false
   end
 
   add_index "speakers", ["speaker_history_id"], name: "index_speakers_on_speaker_history_id"
