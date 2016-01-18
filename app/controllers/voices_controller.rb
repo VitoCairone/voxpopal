@@ -28,6 +28,10 @@ class VoicesController < ApplicationController
 
     respond_to do |format|
       if @voice.save
+        if @voice.choice_id == 0
+          redirect_to :issues
+          return
+        end
         format.html { redirect_to @voice.issue, notice: 'Voice was successfully created.' }
         format.json { render :show, status: :created, location: @voice }
       else
@@ -69,12 +73,14 @@ class VoicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def voice_params
-      params.require(:voice).permit(:choice_id, :level)
+      params.require(:voice).permit(:issue_id, :choice_id, :level)
     end
 
     def cleaned_voice_params
       vp = voice_params
-      vp['issue_id'] = Choice.find(vp['choice_id']).issue_id
+      if !vp.keys.include? 'issue_id'
+        vp['issue_id'] = Choice.find(vp['choice_id']).issue_id
+      end
       vp['speaker_id'] = current_speaker.id
       vp
     end

@@ -14,7 +14,7 @@
 			<% if is_guest? %>
 				<i>viewing as guest</i> <%= current_speaker.codename %>.
 				Please <%= link_to 'Login', new_session_path %>
-				or <%= link_to 'Register', new_speaker_path %>
+				/ <%= link_to 'Signup', new_speaker_path %>
 			<% else %>
 				You are logged in as <%= current_speaker.codename %> 
 				| <%= link_to 'Logout', new_session_path %>
