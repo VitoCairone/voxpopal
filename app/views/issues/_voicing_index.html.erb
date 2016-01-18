@@ -6,7 +6,10 @@
   </div>
   <div style="text-align:right;padding-right:30px;">
     <p>
-      <%= link_to 'state Voice', issue %>
+      <%= link_to 'state Voice', issue %> | 
+      <!-- link_to 'pass' needs to invoke Speaker
+      controller to update Speaker's history -->
+      <%= link_to 'pass', :issues %>
     </p>
   </div>
 <% end %>

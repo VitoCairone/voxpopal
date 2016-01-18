@@ -8,7 +8,7 @@ class IssuesController < ApplicationController
     # SELECT * FROM issues i
     # JOIN voices v ON v.issue_id = i.id
     # WHERE v.speaker_id = {current_speaker.id}
-    @issues = Issue.all
+    @issues = Issue.unseen_by_speaker(current_speaker)
   end
 
   # GET /issues/1
