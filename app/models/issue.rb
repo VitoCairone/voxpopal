@@ -4,7 +4,7 @@ class Issue < ActiveRecord::Base
   has_many :voices
   accepts_nested_attributes_for :choices, allow_destroy: true
 
-  def self.unseen_by_speaker(speaker, limit=3)
+  def self.unseen_by_speaker(speaker, limit=3, offset=0)
     return nil unless speaker.id.is_a? Integer
     # indentation in string literal to SQL is not ideal, redo this
     Issue.joins(<<-JOIN_STRING
@@ -15,6 +15,7 @@ class Issue < ActiveRecord::Base
           )
           .where("voices.id IS NULL") #.order(boost: :desc)
           .limit(limit)
+          .offset(offset)
   end
 
   def self.seen_by_speaker(speaker, limit=3)
@@ -22,10 +23,11 @@ class Issue < ActiveRecord::Base
     Issue.joins(:voices)
          .where(voices: { speaker_id: speaker.id }) #.order(boost: :desc)
          .limit(limit)
+         .offset(offset)
   end
 
   def to_s
-    codename
+    "#{codename}-#{id}"
   end
 
 end

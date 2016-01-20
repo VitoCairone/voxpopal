@@ -1,5 +1,9 @@
 <!--<p id="notice"><%= notice %></p>-->
 
+<% @spare_issues.each do |issue| %>
+	<%= render 'issues/collapsed_issue', issue: issue %>
+<% end %>
+
 <p style="margin-bottom:0px;">
   <small><i>Issue <%= @issue.codename %></i></small>
 </p>
@@ -9,7 +13,7 @@
 </h2>
 
 <div style="margin-left:20px;">
-	<%= render 'voice_form' %>
+	<%= render 'issues/voice_form' %>
 </div>
 
 <%= link_to 'Edit', edit_issue_path(@issue) %> |

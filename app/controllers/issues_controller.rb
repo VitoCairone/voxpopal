@@ -4,7 +4,7 @@ class IssuesController < ApplicationController
   # GET /issues
   # GET /issues.json
   def index
-    @issues = Issue.unseen_by_speaker(current_speaker)
+    @issues = Issue.unseen_by_speaker(current_speaker, limit=3)
 
     if @issues.length > 0
       current_speaker.speaker_history.issue_spare_1_id = @issues[0].id
@@ -15,16 +15,16 @@ class IssuesController < ApplicationController
         end
       end
     end
-    if @issues.length > 3
-      current_speaker.speaker_history.next_issue_id = @issues[3].id
-    end
+    # if @issues.length > 3
+    #   current_speaker.speaker_history.next_issue_id = @issues[3].id
+    # end
     current_speaker.speaker_history.save
 
     @issues
   end
 
   def seen
-    @issues = Issue.seen_by_speaker(current_speaker)
+    @issues = Issue.seen_by_speaker(current_speaker, limit=3)
   end
 
   # GET /issues/1
@@ -35,6 +35,8 @@ class IssuesController < ApplicationController
     @voices = Voice.where(issue_id: @issue.id) if @voice_given
     @voice ||= Voice.new
     @voice_stats = Voice.find_counts_by_choice(@issue)
+
+    voicing_workflow
   end
 
   # GET /issues/new
@@ -117,5 +119,44 @@ class IssuesController < ApplicationController
       not_original = !!(Issue.find_by_codename(codename))
     end
     codename
+  end
+
+  def voicing_workflow
+    # why is it that current_speaker.speaker_history works
+    # but speaker_history.issue_spare_1 doesn't?
+    @history = current_speaker.speaker_history
+    spare_issue_ids = [
+      @history.issue_spare_1_id,
+      @history.issue_spare_2_id,
+      @history.issue_spare_3_id
+    ]
+    spare_issue_ids -= [nil]
+    unord_spare_issues = Issue.find(spare_issue_ids)
+
+    puts "@@@@@ unord_spare_issues: #{unord_spare_issues}"
+
+    @spare_issues = []
+    spare_issue_ids.each do |id|
+      @spare_issues += [unord_spare_issues.find{|record| record.id == id}]
+    end
+
+    puts "@@@@@ @spare_issues: #{@spare_issues}"
+    
+    unseen_issues = Issue.unseen_by_speaker(current_speaker, limit=5)
+    possible_new_issues = unseen_issues - (@spare_issues + [@issue])
+    new_issue = possible_new_issues.sample
+    replace_slot = @spare_issues.find_index @issue
+    if [0,1,2].include? replace_slot
+      case replace_slot
+        when 0
+          @history.issue_spare_1_id = new_issue.id
+        when 1
+          @history.issue_spare_2_id = new_issue.id
+        when 2
+          @history.issue_spare_3_id = new_issue.id
+      end
+      @spare_issues[replace_slot] = new_issue
+      @history.save
+    end
   end
 end

@@ -1,0 +1,15 @@
+<p>
+	<%= issue.text %>
+</p>
+<p>
+  <%= link_to 'state Voice', issue %> | 
+  <!-- link_to 'pass' needs to invoke Speaker
+  controller to update Speaker's history -->
+  <%= link_to 'pass', 
+  						{controller: "voices", 
+           		 action:  "create", 
+           		 voice: {issue_id: issue.id, choice_id: 0}
+           		},
+           		:method => "post" %>
+</p>
+<hr>
