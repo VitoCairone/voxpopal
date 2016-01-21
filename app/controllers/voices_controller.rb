@@ -28,7 +28,8 @@ class VoicesController < ApplicationController
 
     respond_to do |format|
       if @voice.save
-        if @voice.choice_id == 0 # this is a pass action
+        if @voice.choice_id == 0
+          pass_action
           redirect_to :back
           return
         end
@@ -83,5 +84,10 @@ class VoicesController < ApplicationController
       end
       vp['speaker_id'] = current_speaker.id
       vp
+    end
+
+    def pass_action
+      @issue = @voice.issue
+      replace_issue_in_history
     end
 end

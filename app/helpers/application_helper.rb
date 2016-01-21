@@ -38,4 +38,43 @@ module ApplicationHelper
     @current_speaker = nil
   end
 
+  def replace_issue_in_history
+    # why is it that current_speaker.speaker_history works
+    # but speaker_history.issue_spare_1 doesn't?
+    @history = current_speaker.speaker_history
+    spare_issue_ids = [
+      @history.issue_spare_1_id,
+      @history.issue_spare_2_id,
+      @history.issue_spare_3_id
+    ]
+    spare_issue_ids -= [nil]
+    unord_spare_issues = Issue.find(spare_issue_ids)
+
+    # puts "@@@@@ unord_spare_issues: #{unord_spare_issues}"
+
+    @spare_issues = []
+    spare_issue_ids.each do |id|
+      @spare_issues += [unord_spare_issues.find{|record| record.id == id}]
+    end
+
+    # puts "@@@@@ @spare_issues: #{@spare_issues}"
+    
+    unseen_issues = Issue.unseen_by_speaker(current_speaker, limit=5)
+    possible_new_issues = unseen_issues - (@spare_issues + [@issue])
+    new_issue = possible_new_issues.sample
+    replace_slot = @spare_issues.find_index @issue
+    replacement = new_issue.nil? ? nil : new_issue.id
+    if [0,1,2].include? replace_slot
+      case replace_slot
+        when 0
+          @history.issue_spare_1_id = replacement
+        when 1
+          @history.issue_spare_2_id = replacement
+        when 2
+          @history.issue_spare_3_id = replacement
+      end
+      @spare_issues[replace_slot] = new_issue unless new_issue.nil?
+      @history.save
+    end
+  end
 end
