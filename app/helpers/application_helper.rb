@@ -38,6 +38,9 @@ module ApplicationHelper
     @current_speaker = nil
   end
 
+  # the effects of this function are
+  # (1) to update the issue_spare_X_id values and
+  # (2) set @spare_issues
   def replace_issue_in_history
     # why is it that current_speaker.speaker_history works
     # but speaker_history.issue_spare_1 doesn't?
@@ -47,23 +50,23 @@ module ApplicationHelper
       @history.issue_spare_2_id,
       @history.issue_spare_3_id
     ]
-    spare_issue_ids -= [nil]
-    unord_spare_issues = Issue.find(spare_issue_ids)
 
-    # puts "@@@@@ unord_spare_issues: #{unord_spare_issues}"
-
+    # actually set @spare_issues for display by the template
+    unord_spare_issues = Issue.find(spare_issue_ids - [nil])
     @spare_issues = []
     spare_issue_ids.each do |id|
       @spare_issues += [unord_spare_issues.find{|record| record.id == id}]
     end
-
-    # puts "@@@@@ @spare_issues: #{@spare_issues}"
+    @spare_issues -= [nil]
     
+    # find the next issue to slot in
     unseen_issues = Issue.unseen_by_speaker(current_speaker, limit=5)
-    possible_new_issues = unseen_issues - (@spare_issues + [@issue])
-    new_issue = possible_new_issues.sample
-    replace_slot = @spare_issues.find_index @issue
-    replacement = new_issue.nil? ? nil : new_issue.id
+    possible_new_issue_ids = unseen_issues.map(&:id) - (spare_issue_ids + [@issue.id, nil])
+    new_issue_id = possible_new_issue_ids.sample
+
+    replace_slot = spare_issue_ids.find_index @issue.id
+    replacement = new_issue_id
+
     if [0,1,2].include? replace_slot
       case replace_slot
         when 0
@@ -73,8 +76,11 @@ module ApplicationHelper
         when 2
           @history.issue_spare_3_id = replacement
       end
-      @spare_issues[replace_slot] = new_issue unless new_issue.nil?
       @history.save
+
+      unless new_issue_id.nil?
+        @spare_issues[replace_slot] = unseen_issues.find{ |x| x.id == new_issue_id }
+      end
     end
   end
 end
