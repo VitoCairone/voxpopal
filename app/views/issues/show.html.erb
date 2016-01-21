@@ -16,5 +16,6 @@
 	<%= render 'issues/voice_form' %>
 </div>
 
-<%= link_to 'Edit', edit_issue_path(@issue) %> |
-<%= link_to 'Back', issues_path %>
+<% if speaker_owns?(@issue) %>
+	<%= link_to 'Edit', edit_issue_path(@issue) %> |
+<% end %>

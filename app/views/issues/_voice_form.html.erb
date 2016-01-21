@@ -19,11 +19,12 @@
 	  	<% single_count = @voice_stats[choice.id] || 0 %>
 			<% single_rate = (100 * single_count / total_count).to_s %>
 			<% render_strong = top_seven.include? choice.id %>
+      <% choice_id = @voice.nil? ? 0 : @voice.choice_id %>
 		<% end %>
 		<tr>
     <div class="field">
       <td>
-      	<%= radio_button_tag('voice[choice_id]', choice.id) %></td>
+      	<%= radio_button_tag('voice[choice_id]', choice.id, (choice.id == choice_id)) %></td>
       <td>
       	<% if render_strong %><strong><% end %>
       	<%= label_tag('voice_choice_id_' + choice.id.to_s, choice.text) %>

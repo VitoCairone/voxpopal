@@ -6,7 +6,6 @@ class Issue < ActiveRecord::Base
 
   def self.unseen_by_speaker(speaker, limit=3, offset=0)
     return nil unless speaker.id.is_a? Integer
-    # indentation in string literal to SQL is not ideal, redo this
     Issue.joins(<<-JOIN_STRING
           LEFT OUTER JOIN voices
           ON voices.issue_id = issues.id
@@ -18,7 +17,7 @@ class Issue < ActiveRecord::Base
           .offset(offset)
   end
 
-  def self.seen_by_speaker(speaker, limit=3)
+  def self.seen_by_speaker(speaker, limit=3, offset=0)
     return nil unless speaker.id.is_a? Integer
     Issue.joins(:voices)
          .where(voices: { speaker_id: speaker.id }) #.order(boost: :desc)

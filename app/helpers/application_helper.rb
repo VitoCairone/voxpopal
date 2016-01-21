@@ -39,9 +39,13 @@ module ApplicationHelper
   end
 
   # the effects of this function are
-  # (1) to update the issue_spare_X_id values and
+  # (1) to update the database issue_spare_X_id values and
   # (2) set @spare_issues
   def replace_issue_in_history
+    # note to self -- strongly consider replacing the entire
+    # implementation of this functionality with a single nonreferential
+    # viewslot int on speaker_history model
+    
     # why is it that current_speaker.speaker_history works
     # but speaker_history.issue_spare_1 doesn't?
     @history = current_speaker.speaker_history
@@ -60,6 +64,8 @@ module ApplicationHelper
     @spare_issues -= [nil]
     
     # find the next issue to slot in
+    # right now we're doing a new search every request, eventually consider
+    # some manner of preloading/caching
     unseen_issues = Issue.unseen_by_speaker(current_speaker, limit=5)
     possible_new_issue_ids = unseen_issues.map(&:id) - (spare_issue_ids + [@issue.id, nil])
     new_issue_id = possible_new_issue_ids.sample
