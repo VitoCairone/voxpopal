@@ -28,8 +28,8 @@ class VoicesController < ApplicationController
 
     respond_to do |format|
       if @voice.save
-        if @voice.choice_id == 0
-          redirect_to :issues
+        if @voice.choice_id == 0 # this is a pass action
+          redirect_to :back
           return
         end
         format.html { redirect_to @voice.issue, notice: 'Voice was successfully created.' }
