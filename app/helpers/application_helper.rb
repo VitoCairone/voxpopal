@@ -2,11 +2,18 @@ module ApplicationHelper
 
   def current_speaker
     if session[:session_token].nil?
-      guest_speaker = Speaker.find_guest
-      login(guest_speaker)
-      @current_speaker = guest_speaker
+      return login_free_guest_speaker  
+    elsif @current_speaker ||= Speaker.find_by_session_token(session[:session_token])
+      return @current_speaker
+    else
+      return login_free_guest_speaker
     end
-    @current_speaker ||= Speaker.find_by_session_token(session[:session_token])
+  end
+
+  def login_free_guest_speaker
+    guest_speaker = Speaker.find_guest
+    login(guest_speaker)
+    @current_speaker = guest_speaker
   end
 
   def speaker_owns?(object)
@@ -32,11 +39,14 @@ module ApplicationHelper
 
   # move / reimplement ?
   def logout
-    speaker = current_speaker
-    speaker.session_token = SecureRandom.urlsafe_base64(19)
-    speaker.save
+    unless current_speaker.nil?
+      speaker = current_speaker
+      speaker.session_token = SecureRandom.urlsafe_base64(19)
+      speaker.save
+    end
     session[:session_token] = SecureRandom.urlsafe_base64(18)
     @current_speaker = nil
+    current_speaker # force re-assignment by default method
   end
 
   # the effects of this function are
@@ -57,7 +67,13 @@ module ApplicationHelper
     ]
 
     # actually set @spare_issues for display by the template
-    unord_spare_issues = Issue.find(spare_issue_ids - [nil])
+    begin
+      unord_spare_issues = Issue.find(spare_issue_ids - [nil])
+    rescue ActiveRecord::RecordNotFound => e
+      unord_spare_issues = []
+      spare_issue_ids = []
+    end
+
     @spare_issues = []
     spare_issue_ids.each do |id|
       @spare_issues += [unord_spare_issues.find{|record| record.id == id}]
@@ -85,7 +101,7 @@ module ApplicationHelper
       end
       @history.save
 
-      unless new_issue_id.nil?
+      unless new_issue_id.nil? or spare_issues.size <= replace_slot
         @spare_issues[replace_slot] = unseen_issues.find{ |x| x.id == new_issue_id }
       end
     end

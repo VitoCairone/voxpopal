@@ -13,6 +13,7 @@ class SessionsController < ApplicationController
   end
 
   def new
+    logout unless is_guest?
   end
 
 end

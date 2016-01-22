@@ -26,6 +26,9 @@ class SpeakersController < ApplicationController
   def create
     sparams = speaker_params
     sparams['codename'] = Speaker.get_available_codename
+    sparams['guest'] = false
+    sparams['admin'] = false
+    sparams['session_token'] = 'NEWLY_REGISTERED'
     @speaker = Speaker.new(sparams)
     @speaker.speaker_history = SpeakerHistory.create
 
