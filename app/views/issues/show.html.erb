@@ -16,6 +16,6 @@
 	<%= render 'issues/voice_form' %>
 </div>
 
-<% if speaker_owns?(@issue) %>
+<% if !@issue.id.nil? and speaker_owns?(@issue) %>
 	<%= link_to 'Edit', edit_issue_path(@issue) %> |
 <% end %>

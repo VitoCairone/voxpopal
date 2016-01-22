@@ -19,6 +19,26 @@ class Speaker < ActiveRecord::Base
       s.speaker_history = SpeakerHistory.create
       s.password = SecureRandom.urlsafe_base64(20)
     end
+    puts "@@ #{speaker} @@"
+    speaker
+  end
+
+  def self.create_guests(n)
+    guest_param_arr = (1..n).map do |i|
+      {
+        codename: get_available_codename,
+        speaker_history: SpeakerHistory.create,
+        password: SecureRandom.urlsafe_base64(20),
+        session_token: 'LOGGED_OUT_GUEST'
+      }
+    end
+
+    # even passing an array to Speaker.create generates n
+    # seperate INSERT queries. Need to find how to resolve this
+    # or send raw SQL to combine to one INSERT.
+    # Some comments on this here:
+    # https://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/
+    Speaker.create(guest_param_arr)
   end
 
   def self.get_available_codename
