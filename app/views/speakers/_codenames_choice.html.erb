@@ -1,0 +1,11 @@
+<table>
+  <% codenames = [current_speaker.codename] + @issue.choices.map(&:text) %>
+  <% codenames.each_with_index do |cn, idx| %>
+    <% if idx % 3 == 0 %><tr><% end %>
+    <td><%= radio_button_tag('speaker[codename]', cn, idx == 0) %></td>
+    <td>
+    	<%= label_tag('speaker_codename_' + cn.tr(' ', '_'), cn) %>
+    </td>
+    <% if idx % 3 == 2 or idx == codenames.length - 1 %></tr><% end %>
+  <% end %>
+</table>

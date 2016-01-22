@@ -35,7 +35,7 @@ class SpeakersController < ApplicationController
 
     respond_to do |format|
       if new_speaker and new_speaker.update(sparams)
-        new_speaker.clear_codename_reservations(reserve_token)
+        Speaker.clear_codename_reservations(reserve_token)
         logout
         login(new_speaker)
         @speaker = new_speaker

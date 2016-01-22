@@ -1,0 +1,10 @@
+<% @issues.each do |issue| %>
+  <div>
+    <p><%= issue.text %></p>
+  </div>
+  <div style="text-align:right;padding-right:30px;">
+    <p>
+      <%= link_to 'change Voice', issue %>
+    </p>
+  </div>
+<% end %>
