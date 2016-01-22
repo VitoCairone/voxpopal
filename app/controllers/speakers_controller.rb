@@ -24,18 +24,21 @@ class SpeakersController < ApplicationController
   # POST /speakers
   # POST /speakers.json
   def create
+    # note that this method does NOT actually create a new speaker object
     sparams = speaker_params
-    sparams['codename'] = Speaker.get_available_codename
     sparams['guest'] = false
     sparams['admin'] = false
     sparams['session_token'] = 'NEWLY_REGISTERED'
-    @speaker = Speaker.new(sparams)
-    @speaker.speaker_history = SpeakerHistory.create
+
+    reserve_token = "RESERVED_FOR_#{current_speaker.id}"
+    new_speaker = Speaker.find_by_codename_and_session_token(sparams['codename'], reserve_token)
 
     respond_to do |format|
-      if @speaker.save
+      if new_speaker and new_speaker.update(speaker_params)
+        new_speaker.clear_codename_reservations
         logout
-        login(@speaker)
+        login(new_speaker)
+        @speaker = new_speaker
         format.html { redirect_to @speaker, notice: 'Speaker was successfully created.' }
         format.json { render :show, status: :created, location: @speaker }
       else

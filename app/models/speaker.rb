@@ -6,6 +6,17 @@ class Speaker < ActiveRecord::Base
   has_many :voices
   has_many :issues
 
+  def clear_codename_reservations
+    if id.is_a? Integer
+      Speaker.connection.update(<<-UPDATE_STRING
+UPDATE speakers
+SET session_token = 'LOGGED_OUT_GUEST'
+WHERE session_token = 'RESERVED_FOR_#{id}'
+UPDATE_STRING
+      )
+    end
+  end
+
   def self.find_guest
   	# this method is not race-condition proof. In future prefer to send
   	# the instruction to the DB to update and save
@@ -19,7 +30,6 @@ class Speaker < ActiveRecord::Base
       s.speaker_history = SpeakerHistory.create
       s.password = SecureRandom.urlsafe_base64(20)
     end
-    puts "@@ #{speaker} @@"
     speaker
   end
 
@@ -39,6 +49,20 @@ class Speaker < ActiveRecord::Base
     # Some comments on this here:
     # https://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/
     Speaker.create(guest_param_arr)
+  end
+
+  def self.update_reserved_session_tokens(reserve_token)
+    Issue.connection.update(<<-UPDATE_STRING
+UPDATE speakers
+SET session_token = '#{reserve_token}'
+WHERE id IN (
+  SELECT id
+  FROM speakers
+  WHERE session_token = 'LOGGED_OUT_GUEST'
+  LIMIT 20
+)
+UPDATE_STRING
+    )
   end
 
   def self.get_available_codename

@@ -101,7 +101,7 @@ module ApplicationHelper
       end
       @history.save
 
-      unless new_issue_id.nil? or spare_issues.size <= replace_slot
+      unless new_issue_id.nil? or @spare_issues.size <= replace_slot
         @spare_issues[replace_slot] = unseen_issues.find{ |x| x.id == new_issue_id }
       end
     end
