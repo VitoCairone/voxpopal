@@ -34,8 +34,8 @@ class SpeakersController < ApplicationController
     new_speaker = Speaker.find_by_codename_and_session_token(sparams['codename'], reserve_token)
 
     respond_to do |format|
-      if new_speaker and new_speaker.update(speaker_params)
-        new_speaker.clear_codename_reservations
+      if new_speaker and new_speaker.update(sparams)
+        new_speaker.clear_codename_reservations(reserve_token)
         logout
         login(new_speaker)
         @speaker = new_speaker

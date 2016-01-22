@@ -6,12 +6,12 @@ class Speaker < ActiveRecord::Base
   has_many :voices
   has_many :issues
 
-  def clear_codename_reservations
+  def clear_codename_reservations(reserve_token)
     if id.is_a? Integer
       Speaker.connection.update(<<-UPDATE_STRING
 UPDATE speakers
 SET session_token = 'LOGGED_OUT_GUEST'
-WHERE session_token = 'RESERVED_FOR_#{id}'
+WHERE session_token = '#{reserve_token}'
 UPDATE_STRING
       )
     end
