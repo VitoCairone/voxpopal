@@ -31,6 +31,8 @@ class SpeakersController < ApplicationController
 
     respond_to do |format|
       if @speaker.save
+        logout
+        login(@speaker)
         format.html { redirect_to @speaker, notice: 'Speaker was successfully created.' }
         format.json { render :show, status: :created, location: @speaker }
       else
@@ -73,7 +75,7 @@ class SpeakersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def speaker_params
-    params.require(:speaker).permit(:codename, :name, :email, :password_hash, :starsign, :birth_month, :birth_year, :verification_id, :level, :session_token, :recall_token, :logged_in, :last_action)
+    params.require(:speaker).permit(:codename, :name, :email, :password, :starsign, :birth_month, :birth_year)
   end
 
 end

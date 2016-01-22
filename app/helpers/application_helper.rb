@@ -27,6 +27,7 @@ module ApplicationHelper
     speaker.session_token = token
     speaker.save
     session[:session_token] = token
+    @current_speaker = speaker
   end
 
   # move / reimplement ?
