@@ -10,6 +10,9 @@ gem 'rails', '4.2.5'
 # gem 'sqlite3'
 
 # Use postgres as the datbase for Active Record
+# This gem may fail via 'bundle install' on OS X
+# in which case it must be installed from the command line using:
+# $ env ARCHFLAGS="-arch x86_64" gem install pg
 gem 'pg'
 
 # Use SCSS for stylesheets
