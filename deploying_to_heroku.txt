@@ -1,0 +1,33 @@
+quick guide for exiting git repo
+	https://devcenter.heroku.com/articles/getting-started-with-rails4#local-workstation-setup
+
+	Use a Procfile in the root directory to dictate specific commands
+
+	Almost every deploy to Heroku follows this same pattern.
+	First, add the modified files to the local git repository:
+	$ git add .
+
+	Now commit the changes to the repository:
+	$ git commit -m "Demo"
+
+	Now deploy, just as you did previously:
+	$ git push heroku master
+
+	Finally, check that everything is working:
+	$ heroku open
+
+Key Commands
+
+	heroku logs <tags>
+	heroku logs --tail
+	# must Ctrl+C to stop
+
+	heroku addons 
+	# see addons e.g. postgres DB manager
+
+	heroku config
+	# show config vars
+
+	heroku run <cmd>
+	heroku run rake db:migrate
+	# run a particular commmand in a one-off dyno process
