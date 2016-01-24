@@ -7,21 +7,22 @@ rails generate scaffold choice issue:references speaker:references text:text voi
 
 rails generate scaffold voice issue:references speaker:references choice:references level:integer
 
-rails generate scaffold comment speaker:references parent:references{polymorphic}
+rails generate scaffold comment text:text speaker:references parent:references{polymorphic}
 
 rails generate scaffold verification speaker:references
 
+# AVF
+rails generate scaffold proposal code:string speaker:references text:text upvotes:integer downvotes:integer boost:integer
+
 # COMMON
 rails generate scaffold pocket speaker:references boost:integer
+
 rails generate scaffold checkbook speaker:references
 
-# AVF
-rails generate scaffold proposal
-rails generate scaffold amendment
-
 # GPE
+rails generate scaffold vision sunsign:string color:string is_star:boolean stake_cents:integer speaker:references was_correct:boolean personal_sequence:integer
+
 rails generate scaffold starsign
-rails generate scaffold vision
 
 # -----
 
@@ -47,7 +48,6 @@ rails generate scaffold vision
 # tests for CRUD with security on proposals, amendments, votes
 # display of proposals in fixed rank order with votes
 # tests for all functions excluding micropayments / GPE
-# host app { auto-trigger @ 9 pm Sunday 1/10/16 }
 # implement patronage portal and patron rewards
 # implement micropayments
 # manually test micropayments

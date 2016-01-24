@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Proposals</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Speaker</th>
+      <th>Text</th>
+      <th>Upvotes</th>
+      <th>Downvotes</th>
+      <th>Boost</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @proposals.each do |proposal| %>
+      <tr>
+        <td><%= proposal.code %></td>
+        <td><%= proposal.speaker %></td>
+        <td><%= proposal.text %></td>
+        <td><%= proposal.upvotes %></td>
+        <td><%= proposal.downvotes %></td>
+        <td><%= proposal.boost %></td>
+        <td><%= link_to 'Show', proposal %></td>
+        <td><%= link_to 'Edit', edit_proposal_path(proposal) %></td>
+        <td><%= link_to 'Destroy', proposal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Proposal', new_proposal_path %>

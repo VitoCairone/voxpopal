@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160124001455) do
+ActiveRecord::Schema.define(version: 20160124200111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,19 @@ ActiveRecord::Schema.define(version: 20160124001455) do
 
   add_index "issues", ["speaker_id"], name: "index_issues_on_speaker_id", using: :btree
 
+  create_table "proposals", force: :cascade do |t|
+    t.string   "code"
+    t.integer  "speaker_id"
+    t.text     "text"
+    t.integer  "upvotes"
+    t.integer  "downvotes"
+    t.integer  "boost"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "proposals", ["speaker_id"], name: "index_proposals_on_speaker_id", using: :btree
+
   create_table "speaker_histories", force: :cascade do |t|
     t.integer  "speaker_id"
     t.integer  "issue_spare_1_id"
@@ -87,6 +100,9 @@ ActiveRecord::Schema.define(version: 20160124001455) do
     t.integer  "verification_id"
   end
 
+  add_index "speakers", ["codename"], name: "index_speakers_on_codename", unique: true, using: :btree
+  add_index "speakers", ["email"], name: "index_speakers_on_email", using: :btree
+  add_index "speakers", ["session_token"], name: "index_speakers_on_session_token", using: :btree
   add_index "speakers", ["speaker_history_id"], name: "index_speakers_on_speaker_history_id", using: :btree
   add_index "speakers", ["verification_id"], name: "index_speakers_on_verification_id", using: :btree
 
@@ -115,6 +131,7 @@ ActiveRecord::Schema.define(version: 20160124001455) do
   add_foreign_key "choices", "speakers"
   add_foreign_key "comments", "speakers"
   add_foreign_key "issues", "speakers"
+  add_foreign_key "proposals", "speakers"
   add_foreign_key "speaker_histories", "speakers"
   add_foreign_key "speakers", "speaker_histories"
   add_foreign_key "speakers", "verifications"
