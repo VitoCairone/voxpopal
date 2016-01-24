@@ -31,7 +31,9 @@ class SpeakersController < ApplicationController
     sparams['session_token'] = 'NEWLY_REGISTERED'
 
     reserve_token = "RESERVED_FOR_#{current_speaker.id}"
-    new_speaker = Speaker.find_by_codename_and_session_token(sparams['codename'], reserve_token)
+
+    new_speaker = current_speaker if current_speaker.codename == sparams['codename']
+    new_speaker ||= Speaker.find_by_codename_and_session_token(sparams['codename'], reserve_token)
 
     respond_to do |format|
       if new_speaker and new_speaker.update(sparams)
