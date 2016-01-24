@@ -69,6 +69,6 @@ class ProposalsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def proposal_params
-      params.require(:proposal).permit(:code, :speaker_id, :text, :upvotes, :downvotes, :boost)
+      params.require(:proposal).permit(:code, :text)
     end
 end
