@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   def welcome
+    @hide_surround = true
   end
 
   def help
@@ -12,5 +13,8 @@ class HomeController < ApplicationController
   end
 
   def donation_spending_policy
+  end
+
+  def patronage
   end
 end

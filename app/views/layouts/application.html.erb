@@ -10,25 +10,38 @@
 
 <div style="text-align: center;">
 	<div class="center-column">
-		<div style="text-align:right;background-color:#f00;">
-			<% if is_guest? %>
-				<i>viewing as guest</i> <%= current_speaker.codename %>.
-				Please <%= link_to 'Login', new_session_path %>
-				/ <%= link_to 'Signup', new_speaker_path %>
-			<% else %>
-				You are logged in as <%= current_speaker.codename %> 
-				| <%= link_to 'Logout', new_session_path %>
-			<% end %>
-		</div>
+
+		<% unless @hide_surround ||= false %>
+
+			<div style="text-align:right;background-color:#f00;">
+				<% if is_guest? %>
+					<i>viewing as guest</i> <%= current_speaker.codename %>.
+					Please <%= link_to 'Login', new_session_path %>
+					/ <%= link_to 'Signup', new_speaker_path %>
+				<% else %>
+					You are logged in as <%= current_speaker.codename %> 
+					| <%= link_to 'Logout', new_session_path %>
+				<% end %>
+			</div>
+
+		<% end %>
 
 		<div class='content-body'>
 			<%= yield %>
 		</div>
 
-		<div style="background-color:#f00;">
-			<br>
-			<%= link_to 'Top New Issues', issues_path %>
-		</div>
+		<% unless @hide_surround %>
+
+			<div style="background-color:#f00;">
+				<br>
+				<small><%= link_to 'Donations', portal_path %></small> | 
+				<%= link_to 'Seen Issues', seen_issues_path %> | 
+				<%= link_to 'Top New Issues', issues_path %> | 
+				<small><%= link_to 'About', about_path %></small>
+			</div>
+
+		<% end %>
+
 	</div>
 </div>
 

@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   get 'home/help'
   get 'help', to: 'home#help'
 
+  get 'home/patronage'
+  get 'patronage', to: 'home#patronage'
+
   get 'home/donation-spending-policy'
   get 'donation-spending-policy', to: 'home#donation_spending_policy' 
 
