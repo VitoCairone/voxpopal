@@ -38,7 +38,7 @@ class SpeakersController < ApplicationController
     respond_to do |format|
       if new_speaker and new_speaker.update(sparams)
         Speaker.clear_codename_reservations(reserve_token)
-        logout
+        logout(false)
         login(new_speaker)
         @speaker = new_speaker
         format.html { redirect_to @speaker, notice: 'Speaker was successfully created.' }

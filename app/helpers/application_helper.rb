@@ -38,15 +38,17 @@ module ApplicationHelper
   end
 
   # move / reimplement ?
-  def logout
+  def logout(reassign=true)
     unless current_speaker.nil?
       speaker = current_speaker
       speaker.session_token = SecureRandom.urlsafe_base64(19)
       speaker.save
     end
     session[:session_token] = SecureRandom.urlsafe_base64(18)
-    @current_speaker = nil
-    current_speaker # force re-assignment by default method
+    if reassign
+      @current_speaker = nil
+      current_speaker # force re-assignment by default method
+    end
   end
 
   # the effects of this function are

@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
 	def create
     @speaker = Speaker.find_by_email(params[:email])
     if @speaker and @speaker.authenticate(params[:password])
-      logout
+      logout(false)
       login(@speaker)
       redirect_to issues_url
     else
