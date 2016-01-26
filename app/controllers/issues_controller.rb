@@ -24,7 +24,10 @@ class IssuesController < ApplicationController
   end
 
   def seen
-    @issues = Issue.seen_by_speaker(current_speaker, limit=3)
+    page_size = 20
+    @page = 0
+    @page = params[page] if params.key? 'page'
+    @issues = Issue.seen_by_speaker(current_speaker, page_size, page_size * @page)
   end
 
   # GET /issues/1

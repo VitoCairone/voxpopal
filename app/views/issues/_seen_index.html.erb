@@ -8,3 +8,19 @@
     </p>
   </div>
 <% end %>
+
+<% if @page > 1 %>
+  <%= link_to 'top', seen_issues_path %> | 
+<% end %>
+
+<% if @page != 0 %>
+	<%= link_to 'prev page', {controller: "issues", action: "seen", page: @page - 1 } %>
+<% end %>
+
+<% if @page != 0 and @issues.size == 20 %>
+	|
+<% end %>
+
+<% if @issues.size == 20 %>
+	<%= link_to 'next page', {controller: "issues", action: "seen", page: @page + 1 } %>
+<% end %>
