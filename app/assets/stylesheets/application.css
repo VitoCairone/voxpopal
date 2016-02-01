@@ -21,5 +21,9 @@
 }
 
 .content-body {
-	background-color: #36f;
+	background-color: #FFFFFF;
+}
+
+.hidden-by-default {
+	visibility: hidden;
 }

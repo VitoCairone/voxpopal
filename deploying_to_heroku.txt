@@ -31,3 +31,13 @@ Key Commands
 	heroku run <cmd>
 	heroku run rake db:migrate
 	# run a particular commmand in a one-off dyno process
+
+
+Database commands
+
+heroku pg:reset DATABASE_URL
+# DATABASE_URL here is an actual keyword
+
+heroku rake db:migrate
+
+see: http://stackoverflow.com/questions/23233414/how-to-push-seeds-rb-to-existed-rails-app-on-heroku

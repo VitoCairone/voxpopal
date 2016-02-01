@@ -15,10 +15,10 @@
   <table>
   <% choices.each do |choice| %>
   	
+    <% render_strong = top_seven.include? choice.id %>
   	<% if @voice_given %>
 	  	<% single_count = @voice_stats[choice.id] || 0 %>
 			<% single_rate = (100 * single_count / total_count).to_s %>
-			<% render_strong = top_seven.include? choice.id %>
       <% choice_id = @voice.nil? ? 0 : @voice.choice_id %>
 		<% end %>
 		<tr>
@@ -45,7 +45,7 @@
 		  	| <%= total_count %> voices heard
 		  <% end %>
 		  <% if choices.size > 7 %>
-		  	<br>the leading seven options are bolded
+		  	<br>bolded options are the <strong>currently leading seven</strong>
 		  <% end %>
 		  </i></small>
 	  </td>
